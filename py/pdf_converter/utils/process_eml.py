@@ -1,7 +1,7 @@
 import email
 from email.header import decode_header
 from io import BytesIO
-from typing import Tuple, Union
+from typing import Tuple, Union, List, Optional
 
 from PIL import Image
 from PyPDF4 import PdfFileReader, PdfFileWriter
@@ -46,7 +46,7 @@ def decode_headers(header: str) -> Tuple[str, Union[str, None]]:
     return decoded_text, body_encoding
 
 
-def parse_body(eml_message: email.message.Message, email_encoding: str, styles):
+def parse_body(eml_message: email.message.Message, email_encoding: str, styles) -> List[Paragraph]:
     # Get the email body content
     body = ""
     if eml_message.is_multipart():
@@ -66,7 +66,7 @@ def parse_body(eml_message: email.message.Message, email_encoding: str, styles):
     return body_paragraphs
 
 
-def parse_headers(eml_message: email.message.Message, styles):
+def parse_headers(eml_message: email.message.Message, styles) -> Tuple[List[Paragraph], Optional[str]]:
     encodings = []
     field_paragraphs = []
     header_fields = ["Subject", "From", "To", "Date"]
@@ -87,7 +87,7 @@ def parse_headers(eml_message: email.message.Message, styles):
     return story, None
 
 
-def create_pdf(output_stream: BytesIO):
+def create_pdf(output_stream: BytesIO) -> PdfFileWriter:
     content_bytes = output_stream.getvalue()
     pdf_buffer = BytesIO(content_bytes)
     pdf_reader = PdfFileReader(pdf_buffer)
