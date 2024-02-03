@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "pdf_converter"
+version = "0.1.0"
+description = "A simple way to convert formats like eml to pdf"
+authors = ["Rashid Nizamani"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+typer = "^0.3.0"
+reportlab = ">4.0.0"
+PyPDF4 = ">1.0.0"
+typing-extensions = "4.5.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
